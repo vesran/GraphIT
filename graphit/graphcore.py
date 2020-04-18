@@ -12,8 +12,8 @@ class Graph:
             # Catch the numbers of edges and vertices
             first_line = f.readline()
             nums = first_line.split()
-            self.num_vertices = nums[0]
-            self.num_edges = nums[-1]
+            self.num_vertices = int(nums[0])
+            self.num_edges = int(nums[-1])
 
             # Get all lines to be read
             lines = f.readlines()
@@ -38,6 +38,9 @@ class Graph:
 
                 edge = Edge(v1, v2)
                 self.edges.append(edge)
+
+        assert len(self.vertices) == self.num_vertices
+        assert len(self.edges) == self.num_edges
 
 
 class Vertex:
