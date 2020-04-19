@@ -1,0 +1,20 @@
+\ documentclass { article }
+\ usepackage [ left =2cm , right =2cm ,top =2cm , bottom =2 cm ]{ geometry }
+\ usepackage { amsfonts , amssymb }
+\ usepackage { tikz }
+\ begin { document }
+\ begin { center }
+\ begin { tikzpicture }
+\ tikzset { vertex /. style ={ draw ,circle , minimum width =1.6 em , inner sep =0 pt }}
+\ tikzset { edge /. style ={ color = black }}
+\ node [ vertex ] (0) at (1.0 ,1.0) {}; \ draw (0) node {$0$ };
+\ node [ vertex ] (1) at (1.0 ,2.0) {}; \ draw (1) node {$1$ };
+\ node [ vertex ] (2) at (0.134 ,0.5) {}; \ draw (2) node {$2$ };
+\ node [ vertex ] (3) at (1.866 ,0.5) {}; \ draw (3) node {$3$ };
+% Edges
+\ draw [ edge ] (0) -- (1);
+\ draw [ edge ] (0) -- (2);
+\ draw [ edge ] (0) -- (3);
+\end{ tikzpicture }
+\end{ center }
+\end{ document }

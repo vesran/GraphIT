@@ -1,4 +1,21 @@
 
+header_tex = '''\\documentclass {article}
+\\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\\usepackage{amsfonts,amssymb}
+\\usepackage{tikz}
+\\begin{document}
+\\begin{center}
+\\begin{tikzpicture}
+\\tikzset{vertex/.style={draw,circle,minimum width=1.6 em,inner sep =0 pt}}
+\\tikzset{edge/.style={color=black}}
+'''
+
+footer_tex = '''\\end{tikzpicture}
+\\end{center}
+\\end{document}
+'''
+
+
 class Graph:
 
     def __init__(self):
@@ -42,6 +59,25 @@ class Graph:
         assert len(self.vertices) == self.num_vertices
         assert len(self.edges) == self.num_edges
 
+    def export2tex(self, dest_name='output.tex'):
+        margin = 0
+        with open(dest_name, 'w') as f:
+            f.write(header_tex)
+
+            # Write vertices
+            for vertex in self.vertices:
+                f.write(f'\\ node [ vertex ] ({vertex.id}) at ({vertex.x+margin} ,{vertex.y+margin}) {{}}; \\ draw ({vertex.id}) node {{${vertex.id}$ }};')
+                f.write('\n')
+
+            # Write edges
+            f.write('% Edges')
+            f.write('\n')
+            for edge in self.edges:
+                f.write(f'\\ draw [ edge ] ({edge.v1.id}) -- ({edge.v2.id});')
+                f.write('\n')
+
+            f.write(footer_tex)
+
 
 class Vertex:
 
@@ -71,3 +107,5 @@ if __name__ == '__main__':
 
     print(g.vertices)
     print(g.edges)
+
+    g.export2tex('./resources/output.tex')
