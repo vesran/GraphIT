@@ -27,7 +27,7 @@ def _count_subset_neighbors(v, X):
 
 
 def extract_bipartite_subgraph(graph):
-    edge_threshold = int(graph.edges.__len__() / 2)
+    edge_threshold = int(graph.edges.__len__() / 2) + 1
     X = graph.vertices[:int(len(graph.vertices)/2)]
     Y = graph.vertices[int(len(graph.vertices)/2):]
 
@@ -83,3 +83,5 @@ if __name__ == '__main__':
     vertex_colors = ['r' if v in X else 'b' for v in H.vertices]
     # show(g, edge_colors=edge_colors, vertex_colors=vertex_colors)
     show(H, vertex_colors=vertex_colors)
+
+    print(H.edges.__len__(), "/",  g.edges.__len__())
