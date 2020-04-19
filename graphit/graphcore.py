@@ -55,6 +55,8 @@ class Graph:
 
                 edge = Edge(v1, v2)
                 self.edges.append(edge)
+                v1.neighbors.append(v2)
+                v2.neighbors.append(v1)
 
         assert len(self.vertices) == self.num_vertices
         assert len(self.edges) == self.num_edges
@@ -85,6 +87,7 @@ class Vertex:
         self.id = id
         self.x = x
         self.y = y
+        self.neighbors = []
 
     def __repr__(self):
         return f'<id={self.id}-({self.x}, {self.y})>'
@@ -107,5 +110,7 @@ if __name__ == '__main__':
 
     print(g.vertices)
     print(g.edges)
+    print(g.vertices[1].neighbors)
 
-    g.export2tex('./resources/output.tex')
+
+    # g.export2tex('./resources/output.tex')
