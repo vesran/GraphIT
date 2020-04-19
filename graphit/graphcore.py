@@ -1,3 +1,4 @@
+import random as rand
 
 header_tex = '''\\documentclass {article}
 \\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
@@ -80,6 +81,19 @@ class Graph:
 
             f.write(footer_tex)
 
+    def random_init(self, num_vertices, num_edges):
+        self.num_vertices = num_vertices
+        self.num_edges = num_edges
+        for i in range(num_vertices):
+            v = Vertex(rand.randint(0, num_vertices), rand.randint(0, num_vertices), i)
+            self.vertices.append(v)
+        for i in range(num_edges):
+            v1 = rand.choice(self.vertices)
+            v2 = rand.choice(list(set(self.vertices) - set(v1.neighbors)))
+            self.edges.append(Edge(v1, v2))
+            v1.neighbors.append(v2)
+            v2.neighbors.append(v1)
+
 
 class Vertex:
 
@@ -108,9 +122,7 @@ if __name__ == '__main__':
     g = Graph()
     g.read_dat(pathname)
 
-    print(g.vertices)
-    print(g.edges)
-    print(g.vertices[1].neighbors)
-
+    g.random_init(10, 15)
+    # show(g)
 
     # g.export2tex('./resources/output.tex')

@@ -2,17 +2,6 @@ from graphit.graphcore import Graph
 from graphit.viz import show
 
 
-def is_bipartite(graph, X, Y):
-    # Check there is an edge where both endpoints are in X or Y
-    for edge in graph.edges:
-        v1 = edge.v1
-        v2 = edge.v2
-        if (X.__contains__(v1) and X.__contains__(v2)) or (Y.__contains__(v1) and Y.__contains__(v2)):
-            return False
-
-    return True
-
-
 def _count_bipartite_edges(G, X, Y):
     cpt = 0
     for edge in G.edges:
@@ -45,10 +34,10 @@ def extract_bipartite_subgraph(graph):
     i = 1
     while _count_bipartite_edges(graph, X, Y) < edge_threshold:
         print(f"######### Iteration {i} ################")
+        i += 1
         print(X)
         print(Y)
         print(_count_bipartite_edges(graph, X, Y))
-        i += 1
         # Find in X the best vertex to move
         best_vertex_X, best_vertex_Y = X[0], Y[0]
         best_score_X, best_score_Y = -10000, -10000
@@ -75,11 +64,12 @@ def extract_bipartite_subgraph(graph):
             X.append(best_vertex_Y)
 
     # Extract bipartite subgraph
+    print(X)
+    print(Y)
     H = Graph()
-    H.vertices = X + Y
     H.edges = _extract_bipartite_edges(graph, X, Y)
-    return H
-
+    H.vertices = X + Y
+    return H, X, Y
 
 
 if __name__ == '__main__':
@@ -87,5 +77,9 @@ if __name__ == '__main__':
     g = Graph()
     g.read_dat(pathname)
     # show(g)
-    H = extract_bipartite_subgraph(g)
-    show(H) # TODO : add colors parameters
+    g.random_init(10, 13)
+    H, X, Y = extract_bipartite_subgraph(g)
+    edge_colors = ['r' if edge in H.edges else 'b' for edge in g.edges]
+    vertex_colors = ['r' if v in X else 'b' for v in H.vertices]
+    # show(g, edge_colors=edge_colors, vertex_colors=vertex_colors)
+    show(H, vertex_colors=vertex_colors)
