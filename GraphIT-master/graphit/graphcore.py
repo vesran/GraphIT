@@ -82,8 +82,7 @@ class Graph:
                 f.write('\n')
 
             f.write(footer_tex)
-            
-            
+
     def exportbipartite2tex(self, H, dest_name='output.tex'):
         margin = 0
         with open(dest_name, 'w') as f:
@@ -142,8 +141,6 @@ class Edge:
     def __repr__(self):
         return f'{self.v1}--{self.v2}'
     
-    
-
 
 if __name__ == '__main__':
     pathname = 'C:/Johana/Theorie des graphes/GraphIT-master/GraphIT-master/resources/bipartite1.dat'
