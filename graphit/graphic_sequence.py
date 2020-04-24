@@ -1,4 +1,3 @@
-from graphit.viz import show
 from graphit.graphcore import Graph
 
 
