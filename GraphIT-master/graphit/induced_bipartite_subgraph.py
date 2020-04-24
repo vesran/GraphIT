@@ -72,6 +72,13 @@ def extract_bipartite_subgraph(graph):
     return H, X, Y
 
 
+def export2tex_bipartite_subgraph(pathname, dest_name='./out.tex'):
+    g = Graph()
+    g.read_dat(pathname)
+    H, _, _ = extract_bipartite_subgraph(g)
+    g.exportbipartite2tex(H, dest_name=dest_name)
+
+
 if __name__ == '__main__':
     pathname = 'C:/Johana/Theorie des graphes/GraphIT-master/GraphIT-master/resources/bipartite1.dat'
     g = Graph()
@@ -79,6 +86,6 @@ if __name__ == '__main__':
 
     #g.random_init(10, 13)
     H, X, Y = extract_bipartite_subgraph(g)
-
-   
     g.exportbipartite2tex(H,'C:/Johana/Theorie des graphes/GraphIT-master/GraphIT-master/resources/bipartite1.tex')
+
+    export2tex_bipartite_subgraph(pathname, './out.tex')
