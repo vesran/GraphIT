@@ -1,0 +1,6 @@
+Pipfile 
+Pipfile.lock 
+.idea 
+__pycache__ 
+dev
+*.log
