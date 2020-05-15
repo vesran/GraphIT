@@ -29,9 +29,9 @@ def usage():
     
     -- Check if an integer sequence is a graphic sequence (no file), run :
     
-    \tpython project.py -s 2,1,1
+    \tpython project.py -s 2,1,1,0
     \tor
-    \tpython project.py -s 2,1,1 -v
+    \tpython project.py -s 2,1,1,0 -v
     
     \tNote the your sequence must NOT contains spaces around commas.
     
