@@ -9,6 +9,7 @@ header_tex = '''\\documentclass {article}
 \\begin{tikzpicture}
 \\tikzset{vertex/.style={draw,circle,minimum width=1.6 em,inner sep =0 pt}}
 \\tikzset{edge/.style={color=black}}
+
 '''
 
 footer_tex = '''\\end{tikzpicture}
@@ -69,15 +70,40 @@ class Graph:
 
             # Write vertices
             for vertex in self.vertices:
-                f.write(f'\\ node [ vertex ] ({vertex.id}) at ({vertex.x+margin} ,{vertex.y+margin}) {{}}; \\ draw ({vertex.id}) node {{${vertex.id}$ }};')
+                f.write(
+                    f'\\node[ vertex ] ({vertex.id}) at ({vertex.x + margin} ,{vertex.y + margin}) {{}}; \\draw({vertex.id}) node {{${vertex.id}$ }};')
                 f.write('\n')
 
             # Write edges
             f.write('% Edges')
             f.write('\n')
             for edge in self.edges:
-                f.write(f'\\ draw [ edge ] ({edge.v1.id}) -- ({edge.v2.id});')
+                f.write(f'\\draw[ edge ] ({edge.v1.id}) -- ({edge.v2.id});')
                 f.write('\n')
+
+            f.write(footer_tex)
+
+    def exportbipartite2tex(self, H, dest_name='output.tex'):
+        margin = 0
+        with open(dest_name, 'w') as f:
+            f.write(header_tex)
+            f.write("\\tikzset{Hedge/.style={line width=2pt,color=red}}")
+
+            # Write vertices
+            for vertex in self.vertices:
+                f.write(
+                    f'\\node[ vertex ] ({vertex.id}) at ({vertex.x + margin} ,{vertex.y + margin}) {{}}; \\draw({vertex.id}) node {{${vertex.id}$ }};')
+                f.write('\n')
+
+            # Write edges  and hedges
+
+            for edge in self.edges:
+                if edge in H.edges:
+                    f.write(f'\\draw[ Hedge ] ({edge.v1.id}) -- ({edge.v2.id});')
+                    f.write('\n')
+                else:
+                    f.write(f'\\draw[ edge ] ({edge.v1.id}) -- ({edge.v2.id});')
+                    f.write('\n')
 
             f.write(footer_tex)
 
@@ -118,11 +144,10 @@ class Edge:
 
 
 if __name__ == '__main__':
-    pathname = './resources/claw.dat'
+    pathname = 'C:/Johana/Theorie des graphes/GraphIT-master/GraphIT-master/resources/bipartite1.dat'
     g = Graph()
     g.read_dat(pathname)
 
-    g.random_init(10, 15)
-    # show(g)
+    # g.random_init(10, 15)
 
-    # g.export2tex('./resources/output.tex')
+    g.export2tex('C:/Johana/Theorie des graphes/GraphIT-master/GraphIT-master/resources/ouputbipartite1.tex')

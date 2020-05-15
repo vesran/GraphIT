@@ -1,5 +1,4 @@
 from graphit.graphcore import Graph
-from graphit.viz import show
 
 
 def _count_bipartite_edges(G, X, Y):
@@ -32,11 +31,12 @@ def extract_bipartite_subgraph(graph):
     Y = graph.vertices[int(len(graph.vertices)/2):]
 
     i = 1
+    print("toto")
     while _count_bipartite_edges(graph, X, Y) < edge_threshold:
         print(f"######### Iteration {i} ################")
         i += 1
-        print(X)
-        print(Y)
+        print("X",X)
+        print("Y", Y)
         print(_count_bipartite_edges(graph, X, Y))
         # Find in X the best vertex to move
         best_vertex_X, best_vertex_Y = X[0], Y[0]
@@ -64,24 +64,28 @@ def extract_bipartite_subgraph(graph):
             X.append(best_vertex_Y)
 
     # Extract bipartite subgraph
-    print(X)
-    print(Y)
+    print("X",X)
+    print("Y",Y)
     H = Graph()
     H.edges = _extract_bipartite_edges(graph, X, Y)
     H.vertices = X + Y
     return H, X, Y
 
 
-if __name__ == '__main__':
-    pathname = './resources/one.dat'
+def export2tex_bipartite_subgraph(pathname, dest_name='./out.tex'):
     g = Graph()
     g.read_dat(pathname)
-    # show(g)
-    g.random_init(10, 13)
-    H, X, Y = extract_bipartite_subgraph(g)
-    edge_colors = ['r' if edge in H.edges else 'b' for edge in g.edges]
-    vertex_colors = ['r' if v in X else 'b' for v in H.vertices]
-    # show(g, edge_colors=edge_colors, vertex_colors=vertex_colors)
-    show(H, vertex_colors=vertex_colors)
+    H, _, _ = extract_bipartite_subgraph(g)
+    g.exportbipartite2tex(H, dest_name=dest_name)
 
-    print(H.edges.__len__(), "/",  g.edges.__len__())
+
+if __name__ == '__main__':
+    pathname = './resources/bipartite1.dat'
+    # g = Graph()
+    # g.read_dat(pathname)
+    #
+    # #g.random_init(10, 13)
+    # H, X, Y = extract_bipartite_subgraph(g)
+    # g.exportbipartite2tex(H, './resources/bipartite_test.tex')
+
+    export2tex_bipartite_subgraph(pathname, dest_name='./resources/out.tex')
