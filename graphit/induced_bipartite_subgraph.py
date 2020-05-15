@@ -84,6 +84,7 @@ def export2tex_bipartite_subgraph(pathname, dest_name='./out.tex', verbose=False
     H, X, Y = extract_bipartite_subgraph(g)
     print("Partite set X :", X) if verbose else 0
     print("Partite set Y :", Y) if verbose else 0
+    print("File created :", dest_name)
     g.exportbipartite2tex(H, dest_name=dest_name)
 
 
