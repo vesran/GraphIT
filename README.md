@@ -84,7 +84,9 @@ print_is_graphic_sequence([8, 5, 4, 3, 3, 1, 1, 1], verbose=True)
 ```
 
 It only displays a message telling whether the sequence is 
-graphic or not.
+graphic or not, like :
+
+    The sequence is graphic.
 
 For help, run :
 
