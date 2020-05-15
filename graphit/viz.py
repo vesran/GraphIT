@@ -1,27 +1,32 @@
+# To delete
+
 import matplotlib.pyplot as plt
 from graphit.graphcore import Graph
+import networkx as nx
 
 
-def show(graph, markersize=20, annotate=True, edge_colors=None, vertex_colors=None):
-    data = [[edges.v1.x, edges.v1.y, edges.v2.x, edges.v2.y] for edges in graph.edges]
-    edge_color = 'b'
-    vertex_color = 'b'
-    for i, edge in enumerate(data):
-        if edge_colors is not None:
-            edge_color = edge_colors[i]
-
-        plt.plot((edge[0], edge[2]), (edge[1], edge[3]),
-                 markersize=markersize, color=edge_color, markerfacecolor=vertex_color)
-
-    for i, v in enumerate(graph.vertices):
-        if vertex_colors is not None:
-            vertex_color = vertex_colors[i]
-        plt.scatter(v.x, v.y, s=markersize*20, color=vertex_color)
-
-    if annotate:
-        for vertex in graph.vertices:
-            plt.annotate(vertex.id, (vertex.x, vertex.y))
-
+def show(graph):
+    G = nx.MultiGraph()
+    for v in graph.vertices:
+        G.add_node(v.id)
+    for edge in graph.edges:
+        G.add_edge(edge.v1.id, edge.v2.id)
+    pos = nx.spring_layout(G)
+    nx.draw_networkx_nodes(G, pos, node_color='r', node_size=200)
+    nx.draw_networkx_labels(G, pos, node_color='r', node_size=100)
+    ax = plt.gca()
+    for e in G.edges:
+        ax.annotate("",
+                    xy=pos[e[0]], xycoords='data',
+                    xytext=pos[e[1]], textcoords='data',
+                    arrowprops=dict(arrowstyle="-", color="0.5",
+                                    shrinkA=5, shrinkB=5,
+                                    patchA=None, patchB=None,
+                                    connectionstyle="arc3,rad=rrr".replace('rrr', str(0.15 * e[2])
+                                                                           ),
+                                    ),
+                    )
+    plt.axis('off')
     plt.show()
 
 

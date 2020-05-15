@@ -31,14 +31,13 @@ def extract_bipartite_subgraph(graph):
     Y = graph.vertices[int(len(graph.vertices)/2):]
 
     i = 1
-    print("toto")
     while _count_bipartite_edges(graph, X, Y) < edge_threshold:
         print(f"######### Iteration {i} ################")
         i += 1
-        print("X",X)
+        print("X", X)
         print("Y", Y)
         print(_count_bipartite_edges(graph, X, Y))
-        # Find in X the best vertex to move
+        # Find in X and Ythe best vertex to move
         best_vertex_X, best_vertex_Y = X[0], Y[0]
         best_score_X, best_score_Y = -10000, -10000
         for vertex in X:
@@ -64,28 +63,32 @@ def extract_bipartite_subgraph(graph):
             X.append(best_vertex_Y)
 
     # Extract bipartite subgraph
-    print("X",X)
-    print("Y",Y)
+    print("X", X)
+    print("Y", Y)
     H = Graph()
     H.edges = _extract_bipartite_edges(graph, X, Y)
     H.vertices = X + Y
     return H, X, Y
 
 
-def export2tex_bipartite_subgraph(pathname, dest_name='./out.tex'):
+def export2tex_bipartite_subgraph(pathname, dest_name='./out.tex', verbose=False):
     g = Graph()
     g.read_dat(pathname)
-    H, _, _ = extract_bipartite_subgraph(g)
+    H, X, Y = extract_bipartite_subgraph(g)
+    print("Partite set X :", X) if verbose else 0
+    print("Partite set Y :", Y) if verbose else 0
     g.exportbipartite2tex(H, dest_name=dest_name)
 
 
 if __name__ == '__main__':
+    from graphit.viz import *
     pathname = './resources/bipartite1.dat'
-    # g = Graph()
+    g = Graph()
     # g.read_dat(pathname)
-    #
-    # #g.random_init(10, 13)
-    # H, X, Y = extract_bipartite_subgraph(g)
+
+    g.random_init(6, 3, loop=False, multiple_edges=True)
+    H, X, Y = extract_bipartite_subgraph(g)
+    show(g)
     # g.exportbipartite2tex(H, './resources/bipartite_test.tex')
 
-    export2tex_bipartite_subgraph(pathname, dest_name='./resources/out.tex')
+    # export2tex_bipartite_subgraph(pathname, dest_name='./resources/out.tex', verbose=True)

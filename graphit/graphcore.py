@@ -107,7 +107,8 @@ class Graph:
 
             f.write(footer_tex)
 
-    def random_init(self, num_vertices, num_edges):
+    def random_init(self, num_vertices, num_edges, loop=False, multiple_edges=False):
+        self.vertices, self.edges = [], []
         self.num_vertices = num_vertices
         self.num_edges = num_edges
         for i in range(num_vertices):
@@ -115,7 +116,15 @@ class Graph:
             self.vertices.append(v)
         for i in range(num_edges):
             v1 = rand.choice(self.vertices)
-            v2 = rand.choice(list(set(self.vertices) - set(v1.neighbors)))
+            if loop and multiple_edges:
+                v2 = rand.choice(self.vertices)
+            elif loop and not multiple_edges:
+                ok_vertices = list(set(self.vertices) - set(v1.neighbors)) + [v1]
+                v2 = rand.choice(ok_vertices)
+            elif not loop and multiple_edges:
+                v2 = rand.choice(list(set(self.vertices) - set([v1])))
+            else:
+                v2 = rand.choice(list(set(self.vertices) - set(v1.neighbors)))
             self.edges.append(Edge(v1, v2))
             v1.neighbors.append(v2)
             v2.neighbors.append(v1)
