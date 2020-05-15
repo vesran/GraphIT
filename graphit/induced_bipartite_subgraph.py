@@ -86,7 +86,7 @@ if __name__ == '__main__':
     g = Graph()
     # g.read_dat(pathname)
 
-    g.random_init(6, 3, loop=False, multiple_edges=True)
+    g.random_init(6, 4, loop=False, multiple_edges=True)
     H, X, Y = extract_bipartite_subgraph(g)
     show(g)
     # g.exportbipartite2tex(H, './resources/bipartite_test.tex')
