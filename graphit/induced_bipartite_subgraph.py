@@ -74,6 +74,13 @@ def extract_bipartite_subgraph(graph):
 def export2tex_bipartite_subgraph(pathname, dest_name='./out.tex', verbose=False):
     g = Graph()
     g.read_dat(pathname)
+
+    # Check if the given graph is loopless
+    if any(edge.v1.id == edge.v2.id for edge in g.edges):
+        print('The specified graph is not loopless. It might not contains a bipartite subgraph with e(G)/2 edges.')
+        return
+
+    # Extract bipartite graph
     H, X, Y = extract_bipartite_subgraph(g)
     print("Partite set X :", X) if verbose else 0
     print("Partite set Y :", Y) if verbose else 0
@@ -82,7 +89,7 @@ def export2tex_bipartite_subgraph(pathname, dest_name='./out.tex', verbose=False
 
 if __name__ == '__main__':
     from graphit.viz import *
-    pathname = './resources/bipartite1.dat'
+    pathname = './resources/loop_graph.dat'
     g = Graph()
     # g.read_dat(pathname)
 
@@ -91,4 +98,4 @@ if __name__ == '__main__':
     show(g)
     # g.exportbipartite2tex(H, './resources/bipartite_test.tex')
 
-    # export2tex_bipartite_subgraph(pathname, dest_name='./resources/out.tex', verbose=True)
+    export2tex_bipartite_subgraph(pathname, dest_name='./resources/out.tex', verbose=True)
