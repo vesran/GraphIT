@@ -14,8 +14,9 @@ from graphit.induced_bipartite_subgraph import export2tex_bipartite_subgraph
 
 def usage():
     print("""
+    USAGE : 
     It is RECOMMENDED to add option -v to display the actions done during the program.
-    -- Check if a graph in a file is bipartite, run :
+    -- Write a .tex file containing a bipartite subgraph from the input graph described in a file, run :
     
     \tpython project.py -b inputfile.dat,outputfile.dat 
     \tor
@@ -35,6 +36,9 @@ def usage():
     
     \tNote the your sequence must NOT contains spaces around commas.
     
+    -- Help, run :
+    
+    \t python project.py -h
     """)
 
 
@@ -44,6 +48,9 @@ def main(argv):
     except getopt.GetoptError:
         usage()
         sys.exit(2)
+
+    if len(opts) == 0:
+        usage()
 
     seq, bi, verbose = False, False, False
     filename_or_seq = []
