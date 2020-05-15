@@ -1,4 +1,4 @@
-#GraphIT
+# GraphIT
 
 This is a project assignment for the Graph Theory course 
 holds by A. Rossi at University Paris-Dauphine.
@@ -24,9 +24,9 @@ project folder. You should be at the same level than the
 
 This feature illustrates the following theorem : 
 given a loopless graph G, then G has a bipartite subgraph with 
-at least $\frac{e(G)}{2}$ edges. The algorithm creates two 
+at least **e(G)/2 edges**. The algorithm creates two 
 groups X and Y of vertices from G and sends, at each iteration, 
-the best vertex from one of the group to the other one that 
+the best vertex from one of the group to the other one to 
 increase the number of edges linking X and Y until the bound 
 is reached.
 
@@ -49,10 +49,10 @@ Latex code to draw the graph.
 
 ### Graphic sequence
 
-We can check is a given sequence of integers is a graphic 
+We can check if a given sequence of integers is a graphic 
 sequence (ie each integer represents a unique vertex degree in some 
-graph) by taking the maximum a of the sequence and subtract 
-1 to the a highest integer of the sequence without a. 
+graph) by taking the maximum **a** of the sequence and subtract 
+1 to the **a** highest integer of the sequence without **a**. 
 Iterating like so will lead us to a sequence of 0 if it is 
 graphic or with negative integers if it is not. 
 
