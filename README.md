@@ -94,6 +94,9 @@ For help, run :
 
 ## Files format
 
+Examples are in ```resources``` folder containing several examples 
+including Peterson graph, bipartite graphs...
+
 To extract bipartite subgraph, the file format is the same 
 as described in the project's instructions.
 

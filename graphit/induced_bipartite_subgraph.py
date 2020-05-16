@@ -113,19 +113,20 @@ def export2tex_bipartite_subgraph(pathname, dest_name='./out.tex', verbose=False
     H, X, Y = extract_bipartite_subgraph(g)
     print("Partite set X :", X) if verbose else 0
     print("Partite set Y :", Y) if verbose else 0
+    print(f'Ratio of marked edges : {_count_bipartite_edges(g, X, Y)}/{g.num_edges}')
     print("File created :", dest_name)
     g.exportbipartite2tex(H, dest_name=dest_name)
 
 
 if __name__ == '__main__':
     from graphit.viz import *
-    pathname = './resources/loop_graph.dat'
+    pathname = './resources/hexa.dat'
     g = Graph()
-    # g.read_dat(pathname)
+    g.read_dat(pathname)
 
-    g.random_init(6, 4, loop=False, multiple_edges=True)
+    # g.random_init(6, 4, loop=False, multiple_edges=True)
     H, X, Y = extract_bipartite_subgraph(g)
-    show(g)
+    # show(g)
     # g.exportbipartite2tex(H, './resources/bipartite_test.tex')
 
     export2tex_bipartite_subgraph(pathname, dest_name='./resources/out.tex', verbose=True)
