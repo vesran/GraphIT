@@ -2,6 +2,11 @@ from graphit.graphcore import Graph
 
 
 def _is_graphic_sequence(sequence, verbose=False):
+    """ Checks whether the given sequence is graphic.
+    :param sequence: List of integer
+    :param verbose: Boolean to display messages.
+    :return: True if the sequence is graphic, False otherwise.
+    """
     sorted_sequence = sorted(sequence, reverse=True)
     print("---- Initial sequence :", sorted_sequence) if verbose else 0
 
@@ -31,6 +36,11 @@ def _is_graphic_sequence(sequence, verbose=False):
 
 
 def print_is_graphic_sequence(sequence_or_file, verbose=False):
+    """ Checks whether a sequence (may be in a file) is graphic.
+    :param sequence_or_file: List of integer or file containing the sequence.
+    :param verbose: Boolean to display messages.
+    :return: None
+    """
     # Handle file and list case in parameters
     if type(sequence_or_file) == str:
         # File as input

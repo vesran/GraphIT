@@ -19,6 +19,11 @@ footer_tex = '''\\end{tikzpicture}
 
 
 class Graph:
+    """
+    Graph is a representation of a graph. It mainly contains a list of vertices and of edges.
+    It is possible to import a graph from a file in a .dat format and to export it in a .tex file.
+    It is also possible to generates a graph randomly.
+    """
 
     def __init__(self):
         self.vertices = []
@@ -27,6 +32,10 @@ class Graph:
         self.num_vertices = 0
 
     def read_dat(self, pathname):
+        """ Reads the given file to build a graph.
+        :param pathname: Filename in .dat format
+        :return: None
+        """
         with open(pathname, 'r') as f:
             # Catch the numbers of edges and vertices
             first_line = f.readline()
@@ -64,6 +73,10 @@ class Graph:
         assert len(self.edges) == self.num_edges
 
     def export2tex(self, dest_name='output.tex'):
+        """ Export the graph to the specified output file.
+        :param dest_name: Name of the output file in .tex format.
+        :return: None
+        """
         margin = 0
         with open(dest_name, 'w') as f:
             f.write(header_tex)
@@ -84,6 +97,11 @@ class Graph:
             f.write(footer_tex)
 
     def exportbipartite2tex(self, H, dest_name='output.tex'):
+        """ Exports the graph in a .tex format with the subgraph H displayed in red.
+        :param H: Bipartite subgraph of the actual graph.
+        :param dest_name: The name of the output file.
+        :return: None
+        """
         margin = 0
         with open(dest_name, 'w') as f:
             f.write(header_tex)
@@ -108,6 +126,13 @@ class Graph:
             f.write(footer_tex)
 
     def random_init(self, num_vertices, num_edges, loop=False, multiple_edges=False):
+        """ Randomly init the graph after erasing its parameters.
+        :param num_vertices: Number of vertices desired
+        :param num_edges: Number of edges desired.
+        :param loop: if False, graph is loopless
+        :param multiple_edges: if False, graph has no multiple edges.
+        :return: None
+        """
         self.vertices, self.edges = [], []
         self.num_vertices = num_vertices
         self.num_edges = num_edges
@@ -131,6 +156,10 @@ class Graph:
 
 
 class Vertex:
+    """
+    Object representing a vertex in a graph. It contains a identity to be recognized and a position in a euclidean
+    plan (x, y) as well as a list of vertex neighbors.
+    """
 
     def __init__(self, x, y, id):
         self.id = id
@@ -143,6 +172,9 @@ class Vertex:
 
 
 class Edge:
+    """
+    Object representing an edge in a graph. It contains two endpoints which are two vertices.
+    """
 
     def __init__(self, v1, v2):
         self.v1 = v1
