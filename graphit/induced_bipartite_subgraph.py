@@ -2,6 +2,12 @@ from graphit.graphcore import Graph
 
 
 def _count_bipartite_edges(G, X, Y):
+    """ Counts the number of edges in G which starts has an endpoints in X and Y.
+    :param G: Graph
+    :param X: Vertex set from G
+    :param Y: Vertex set from G
+    :return: Integer
+    """
     cpt = 0
     for edge in G.edges:
         v1 = edge.v1
@@ -12,6 +18,12 @@ def _count_bipartite_edges(G, X, Y):
 
 
 def _extract_bipartite_edges(G, X, Y):
+    """ Extracts edges which have an endpoints in X and in Y.
+    :param G: Graph
+    :param X: Vertex set from G
+    :param Y: Vertex set from G
+    :return: List of edges extracted from G
+    """
     bipartite_edges = []
     for edge in G.edges:
         v1 = edge.v1
@@ -22,21 +34,31 @@ def _extract_bipartite_edges(G, X, Y):
 
 
 def _count_subset_neighbors(v, X):
+    """ Counts the number of neighbors of vertex v which are in X.
+    :param v: A vertex
+    :param X: Vertex set
+    :return: Integer
+    """
     return len(set(v.neighbors).intersection(X))
 
 
-def extract_bipartite_subgraph(graph):
+def extract_bipartite_subgraph(graph, verbose=False):
+    """ Extracts a bipartite subgraph of the given graph with at least e(G)/2 edges.
+    :param graph: Graph to extract the subgraph from.
+    :param verbose: Boolean to display messages
+    :return: tuple (subgraph, partite set X, partite set Y)
+    """
     edge_threshold = int(graph.edges.__len__() / 2) + 1
     X = graph.vertices[:int(len(graph.vertices)/2)]
     Y = graph.vertices[int(len(graph.vertices)/2):]
 
     i = 1
     while _count_bipartite_edges(graph, X, Y) < edge_threshold:
-        print(f"######### Iteration {i} ################")
+        print(f"================ Iteration {i} ===================") if verbose else 0
         i += 1
-        print("X", X)
-        print("Y", Y)
-        print(_count_bipartite_edges(graph, X, Y))
+        print("X", X) if verbose else 0
+        print("Y", Y) if verbose else 0
+        print(_count_bipartite_edges(graph, X, Y)) if verbose else 0
         # Find in X and Ythe best vertex to move
         best_vertex_X, best_vertex_Y = X[0], Y[0]
         best_score_X, best_score_Y = -10000, -10000
@@ -51,8 +73,8 @@ def extract_bipartite_subgraph(graph):
                 best_score_Y, best_vertex_Y = score, vertex
 
         # Move best vertex
-        print(f"Best score in X : {best_score_X} - {best_vertex_X}")
-        print(f"Best score in Y : {best_score_Y} - {best_vertex_Y}")
+        print(f"Edge gains X -> Y : {best_score_X} - {best_vertex_X}") if verbose else 0
+        print(f"Edge gains Y -> X: {best_score_Y} - {best_vertex_Y}") if verbose else 0
         if best_score_X > best_score_Y:
             # Move X vertex to Y
             X.remove(best_vertex_X)
@@ -63,8 +85,8 @@ def extract_bipartite_subgraph(graph):
             X.append(best_vertex_Y)
 
     # Extract bipartite subgraph
-    print("X", X)
-    print("Y", Y)
+    print("X", X) if verbose else 0
+    print("Y", Y) if verbose else 0
     H = Graph()
     H.edges = _extract_bipartite_edges(graph, X, Y)
     H.vertices = X + Y
@@ -72,6 +94,13 @@ def extract_bipartite_subgraph(graph):
 
 
 def export2tex_bipartite_subgraph(pathname, dest_name='./out.tex', verbose=False):
+    """ Extracts a bipartite subgraph from the graph described in the given file and export the same graph
+    to a new file with the subgraph in red. Graph must be loopless, otherwise the algorithm stops.
+    :param pathname: Initial graph file
+    :param dest_name: Output file
+    :param verbose: Boolean to display messages
+    :return: None
+    """
     g = Graph()
     g.read_dat(pathname)
 
