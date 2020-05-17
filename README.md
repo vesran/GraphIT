@@ -3,11 +3,18 @@
 This is a project assignment for the Graph Theory course 
 holds by A. Rossi at University Paris-Dauphine.
 
+## Contents
+
+* Prerequisites
+* Usage
+* Files format
+* Architecture
+
 ## Prerequisites
 
 Python 3.x
 
-No package have to be installed.
+No package has to be installed.
 
 ## Usage
 
@@ -19,6 +26,8 @@ Two features has been implemented :
 Download the project and, on command line, go inside the 
 project folder. You should be at the same level than the 
 ```project.py``` file.
+
+If you want to use it via Python interpreter, have a look at the ```demo.py``` file.
 
 ### Extract a bipartite subgraph
 
